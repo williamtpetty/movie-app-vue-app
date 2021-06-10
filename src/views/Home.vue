@@ -32,6 +32,7 @@
         <label for="true"
           >True
           <input
+            value="true"
             type="radio"
             id="englishRadio"
             name="english"
@@ -41,6 +42,7 @@
         <label for="false"
           >False
           <input
+            value="false"
             type="radio"
             id="englishRadio"
             name="english"
@@ -86,7 +88,7 @@ export default {
       newMovieYear: "",
       newMoviePlot: "",
       newMovieDirector: "",
-      newMovieEnglish: null,
+      newMovieEnglish: "",
       movieDetails: {},
     };
   },
@@ -109,7 +111,7 @@ export default {
         year: this.newMovieYear,
         plot: this.newMoviePlot,
         director: this.newMovieDirector,
-        english: document.getElementById("englishRadio").value,
+        english: this.newMovieEnglish,
       };
       axios
         .post("http://localhost:3000/movies", params)
