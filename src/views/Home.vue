@@ -27,7 +27,7 @@
       ></textarea
       ><br />
 
-      <!-- English? <br />
+      English? <br />
       <div>
         <label for="true"
           >True
@@ -52,21 +52,20 @@
       <button class="more-info" v-on:click="createMovie">
         Create New Movie
       </button>
-    </div> -->
-
-      <dialog id="movie-details">
-        <form method="dialog">
-          <h1>Movie Info</h1>
-          <p>Title: {{ movieDetails.title }}</p>
-          <p>Year: {{ movieDetails.year }}</p>
-          <p>Director: {{ movieDetails.director }}</p>
-          <p>Plot: {{ movieDetails.plot }}</p>
-          <p>English: {{ movieDetails.english }}</p>
-          <p>Genres: {{ movieDetails.genre_names }}</p>
-          <button>Close</button>
-        </form>
-      </dialog>
     </div>
+
+    <dialog id="movie-details">
+      <form method="dialog">
+        <h1>Movie Info</h1>
+        <p>Title: {{ movieDetails.title }}</p>
+        <p>Year: {{ movieDetails.year }}</p>
+        <p>Director: {{ movieDetails.director }}</p>
+        <p>Plot: {{ movieDetails.plot }}</p>
+        <p>English: {{ movieDetails.english }}</p>
+        <p>Genres: {{ movieDetails.genre_names }}</p>
+        <button>Close</button>
+      </form>
+    </dialog>
   </div>
 </template>
 
@@ -87,7 +86,7 @@ export default {
       newMovieYear: "",
       newMoviePlot: "",
       newMovieDirector: "",
-      // newMovieEnglish: document.getElementById("englishRadio").value,
+      newMovieEnglish: null,
       movieDetails: {},
     };
   },
@@ -110,13 +109,13 @@ export default {
         year: this.newMovieYear,
         plot: this.newMoviePlot,
         director: this.newMovieDirector,
-        english: this.newMovieEnglish,
+        english: document.getElementById("englishRadio").value,
       };
       axios
         .post("http://localhost:3000/movies", params)
         .then((response) => {
           console.log(response.data);
-          this.movies.push(response);
+          this.movies.push(response.data);
         })
         .catch((error) => {
           console.log(error.response.data.errors);
