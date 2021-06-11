@@ -1,12 +1,5 @@
 <template>
-  <div class="home">
-    <div v-for="movie in movies" v-bind:key="movie.id">
-      <h2>{{ movie.title }}</h2>
-      <p>{{ movie.year }}</p>
-      <p>{{ movie.plot }}</p>
-      <p><strong>Director: </strong>{{ movie.director }}</p>
-      <button class="more-info" v-on:click="showMovie(movie)">More Info</button>
-    </div>
+  <div class="movies-new">
     <div>
       Title:
       <input type="text" v-model="newMovieTitle" placeholder="Title" /><br />
@@ -51,23 +44,11 @@
         </label>
         <br />
       </div>
+
       <button class="more-info" v-on:click="createMovie">
         Create New Movie
       </button>
     </div>
-
-    <dialog id="movie-details">
-      <form method="dialog">
-        <h1>Movie Info</h1>
-        <p>Title: {{ movieDetails.title }}</p>
-        <p>Year: {{ movieDetails.year }}</p>
-        <p>Director: {{ movieDetails.director }}</p>
-        <p>Plot: {{ movieDetails.plot }}</p>
-        <p>English: {{ movieDetails.english }}</p>
-        <p>Genres: {{ movieDetails.genre_names }}</p>
-        <button>Close</button>
-      </form>
-    </dialog>
   </div>
 </template>
 
@@ -89,22 +70,12 @@ export default {
       newMoviePlot: "",
       newMovieDirector: "",
       newMovieEnglish: "",
-      movieDetails: {},
     };
   },
 
-  created: function () {
-    this.indexMovies();
-  },
+  created: function () {},
 
   methods: {
-    indexMovies: function () {
-      axios.get("http://localhost:3000/movies").then((response) => {
-        console.log(response.data);
-        return (this.movies = response.data);
-      });
-    },
-
     createMovie: function () {
       let params = {
         title: this.newMovieTitle,
@@ -118,15 +89,11 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.movies.push(response.data);
+          this.$router.push("/");
         })
         .catch((error) => {
           console.log(error.response.data.errors);
         });
-    },
-
-    showMovie: function (movie) {
-      this.movieDetails = movie;
-      document.querySelector("#movie-details").showModal();
     },
   },
 };
