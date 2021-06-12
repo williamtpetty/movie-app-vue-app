@@ -1,14 +1,22 @@
 <template>
-  <div class="movies-new">
+  <div class="movies-edit">
     <div>
       Title:
-      <input type="text" v-model="newMovieTitle" placeholder="Title" /><br />
+      <input
+        type="text"
+        v-model="editMovieParams.title"
+        placeholder="Title"
+      /><br />
       Year:
-      <input type="text" v-model="newMovieYear" placeholder="Year" /><br />
+      <input
+        type="text"
+        v-model="editMovieParams.year"
+        placeholder="Year"
+      /><br />
       Director:
       <input
         type="text"
-        v-model="newMovieDirector"
+        v-model="editMovieParams.director"
         placeholder="Director"
       /><br />
       Plot:
@@ -16,7 +24,7 @@
         name="plot"
         cols="30"
         rows="10"
-        v-model="newMoviePlot"
+        v-model="editMovieParams.plot"
       ></textarea
       ><br />
 
@@ -29,7 +37,7 @@
             type="radio"
             id="englishRadio"
             name="english"
-            v-model="newMovieEnglish" /></label
+            v-model="editMovieParams.english" /></label
         ><br />
 
         <label for="false"
@@ -39,15 +47,13 @@
             type="radio"
             id="englishRadio"
             name="english"
-            v-model="newMovieEnglish"
+            v-model="editMovieParams.english"
           />
         </label>
         <br />
       </div>
 
-      <button class="more-info" v-on:click="createMovie">
-        Create New Movie
-      </button>
+      <button class="more-info" v-on:click="editMovie()">Save</button>
     </div>
   </div>
 </template>
@@ -55,9 +61,6 @@
 <style>
 .more-info {
   margin-bottom: 35px;
-}
-input {
-  margin-bottom: 5px;
 }
 </style>
 
@@ -68,31 +71,33 @@ export default {
   data: function () {
     return {
       movies: [],
-      newMovieTitle: "",
-      newMovieYear: "",
-      newMoviePlot: "",
-      newMovieDirector: "",
-      newMovieEnglish: "",
+      editMovieParams: {},
     };
   },
 
-  created: function () {},
+  created: function () {
+    this.showMovie();
+  },
 
   methods: {
-    createMovie: function () {
-      let params = {
-        title: this.newMovieTitle,
-        year: this.newMovieYear,
-        plot: this.newMoviePlot,
-        director: this.newMovieDirector,
-        english: this.newMovieEnglish,
-      };
+    showMovie: function () {
       axios
-        .post("http://localhost:3000/movies", params)
+        .get(`/movies/${this.$route.params.id}`)
+        .then((response) => {
+          console.log("movie show:", response.data);
+          return (this.editMovieParams = response.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+        });
+    },
+
+    editMovie: function () {
+      axios
+        .patch(`movies/${this.editMovieParams.id}`, this.editMovieParams)
         .then((response) => {
           console.log(response.data);
-          this.movies.push(response.data);
-          this.$router.push("/");
+          this.$router.push(`/show/${response.data.id}`);
         })
         .catch((error) => {
           console.log(error.response.data.errors);

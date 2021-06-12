@@ -1,18 +1,25 @@
 <template>
-  <div class="index">
-    <h1>Movie Info</h1>
-    <p><strong>Title:</strong> {{ movieDetails.title }}</p>
-    <p><strong>Year:</strong> {{ movieDetails.year }}</p>
-    <p><strong>Director:</strong> {{ movieDetails.director }}</p>
-    <p><strong>Plot:</strong> {{ movieDetails.plot }}</p>
-    <p><strong>English:</strong> {{ movieDetails.english }}</p>
-    <p><strong>Genres:</strong> {{ movieDetails.genre_names }}</p>
+  <div class="movies-show">
+    <h1>{{ movieDetails.title }}</h1>
+    <p><strong>Year:</strong> {{ this.movieDetails.year }}</p>
+    <p><strong>Director:</strong> {{ this.movieDetails.director }}</p>
+    <p><strong>Plot:</strong> {{ this.movieDetails.plot }}</p>
+    <p><strong>English:</strong> {{ this.movieDetails.english }}</p>
+    <p><strong>Genres:</strong> {{ this.movieDetails.genre_names }}</p>
+    <router-link :to="`/show/${this.movieDetails.id}/edit`"
+      >Edit Movie</router-link
+    >
+    <br />
+    <button v-on:click="destroyMovie()">Delete Movie</button>
   </div>
 </template>
 
 <style>
 .more-info {
   margin-bottom: 35px;
+}
+button {
+  margin-top: 35px;
 }
 </style>
 
@@ -33,10 +40,24 @@ export default {
 
   methods: {
     showMovie: function () {
-      axios.get("/show/2").then((response) => {
-        console.log(response.data);
-        return (this.movieDetails = response.data);
-      });
+      axios
+        .get(`/movies/${this.$route.params.id}`)
+        .then((response) => {
+          console.log("movie show:", response.data);
+          return (this.movieDetails = response.data);
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+        });
+    },
+
+    destroyMovie: function () {
+      if (confirm("Are you sure you want to delete this movie?")) {
+        axios.delete(`/movies/${this.$route.params.id}`).then((response) => {
+          console.log(response.data);
+          this.$router.push("/");
+        });
+      }
     },
   },
 };

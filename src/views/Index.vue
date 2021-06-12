@@ -3,9 +3,8 @@
     <div v-for="movie in movies" v-bind:key="movie.id">
       <h2>{{ movie.title }}</h2>
       <p>{{ movie.year }}</p>
-      <p>{{ movie.plot }}</p>
       <p><strong>Director: </strong>{{ movie.director }}</p>
-      <button class="more-info" v-on:click="showMovie()">More Info</button>
+      <router-link v-bind:to="`/show/${movie.id}`">More Details</router-link>
     </div>
   </div>
 </template>
@@ -41,13 +40,6 @@ export default {
       axios.get("/movies").then((response) => {
         console.log(response.data);
         return (this.movies = response.data);
-      });
-    },
-
-    showMovie: function () {
-      axios.get(`/movies/2`).then((response) => {
-        console.log(response.data);
-        this.$router.push(`/show/2`);
       });
     },
   },
