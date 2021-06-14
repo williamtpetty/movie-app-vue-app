@@ -7,6 +7,8 @@ import Logout from "../views/Logout.vue";
 import MoviesNew from "../views/New.vue";
 import MoviesShow from "../views/Show.vue";
 import MoviesEdit from "../views/Edit.vue";
+import ActorsIndex from "../views/actors/Index.vue";
+import ActorsShow from "../views/actors/Show.vue";
 
 Vue.use(VueRouter);
 
@@ -16,12 +18,12 @@ const routes = [
     name: "index",
     component: Home,
   },
-  {
-    path: "/about",
-    name: "about",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
-  },
+  // {
+  //   path: "/about",
+  //   name: "about",
+  //   component: () =>
+  //     import(/* webpackChunkName: "about" */ "../views/About.vue"),
+  // },
   {
     path: "/signup",
     name: "signup",
@@ -51,6 +53,16 @@ const routes = [
     path: "/show/:id/edit",
     name: "movies-edit",
     component: MoviesEdit,
+  },
+  {
+    path: "/actors/index",
+    name: "actors-index",
+    component: ActorsIndex,
+  },
+  {
+    path: "/actors/:id", // Set by a v-bind:to in the router link tag on Index page
+    name: "actors-show",
+    component: ActorsShow,
   },
 ];
 

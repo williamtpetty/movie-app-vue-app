@@ -5,7 +5,8 @@
       <router-link to="/new">New Movie</router-link> |
       <router-link to="/signup">Signup</router-link> |
       <router-link to="/login">Login</router-link> |
-      <router-link to="/logout">Logout</router-link>
+      <router-link to="/logout">Logout</router-link> |
+      <router-link to="/actors/index">Actors</router-link>
     </div>
     <router-view />
   </div>

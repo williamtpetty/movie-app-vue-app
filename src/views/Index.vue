@@ -38,7 +38,7 @@ export default {
   methods: {
     indexMovies: function () {
       axios.get("/movies").then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         return (this.movies = response.data);
       });
     },
