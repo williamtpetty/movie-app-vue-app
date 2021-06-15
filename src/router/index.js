@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Index.vue";
+import Index from "../views/Index.vue";
 import Signup from "../views/Signup.vue";
 import Login from "../views/Login.vue";
 import Logout from "../views/Logout.vue";
@@ -16,7 +16,7 @@ const routes = [
   {
     path: "/",
     name: "index",
-    component: Home,
+    component: Index,
   },
   // {
   //   path: "/about",
