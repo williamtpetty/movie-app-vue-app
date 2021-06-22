@@ -1,46 +1,35 @@
 <template>
   <div class="movies-new">
-    <form v-on:submit.prevent="createMovie()">
-      <ul>
-        <li class="text-danger" v-for="error in errors" v-bind:key="error">
-          {{ error }}
-        </li>
-      </ul>
-
-      <div class="form-group">
+    <!-- <form v-on:submit.prevent="createMovie()">
+      <div>
+        <ul>
+          <li v-for="error in errors" v-bind:key="error">
+            {{ error }}
+          </li>
+        </ul>
+      </div>
+      <div>
         <label>Title: </label>
-        <input
-          type="text"
-          class="form-control"
-          v-model="newMovieParams.title"
-          placeholder="Title"
-        />
+        <input type="text" v-model="newMovieParams.title" placeholder="Title" />
       </div>
 
-      <div class="form-group">
+      <div>
         <label>Year: </label>
-        <input
-          type="text"
-          class="form-control"
-          v-model="newMovieParams.year"
-          placeholder="Year"
-        />
+        <input type="text" v-model="newMovieParams.year" placeholder="Year" />
       </div>
 
-      <div class="form-group">
+      <div>
         <label>Director: </label>
         <input
           type="text"
-          class="form-control"
           v-model="newMovieParams.director"
           placeholder="Director"
         />
       </div>
 
-      <div class="form-group">
+      <div>
         <label>Plot: </label>
         <textarea
-          class="form-control"
           name="plot"
           cols="30"
           rows="10"
@@ -50,13 +39,12 @@
 
       <p>Characters Remaining: {{ 1000 - newMovieParams.plot.length }}</p>
 
-      <div class="form-group">
+      <div>
         <label>English?</label>
         <br />
         <label for="true"
           >True
           <input
-            class="form-control"
             value="true"
             type="radio"
             id="englishRadio"
@@ -67,7 +55,6 @@
         <label for="false"
           >False
           <input
-            class="form-control"
             value="false"
             type="radio"
             id="englishRadio"
@@ -77,8 +64,80 @@
         </label>
         <br />
       </div>
-      <input type="submit" class="more-info btn btn-primary" value="Submit" />
+      <input type="submit" value="Submit" />
+    </form> -->
+
+    <form method="POST" action="/new" v-on:submit.prevent="createMovie()">
+      <div>
+        <label for="title">Title:</label>
+        <input
+          type="text"
+          name="title"
+          id="title"
+          placeholder="Title"
+          v-model="newMovieParams.title"
+        />
+      </div>
+      <div>
+        <label for="year">Year:</label>
+        <input
+          type="text"
+          name="year"
+          id="year"
+          placeholder="Year"
+          v-model="newMovieParams.year"
+        />
+      </div>
+      <div>
+        <label for="director">Director:</label>
+        <input
+          type="text"
+          name="director"
+          id="director"
+          placeholder="Director"
+          v-model="newMovieParams.director"
+        />
+      </div>
+      <div>
+        <label for="plot">Plot:</label>
+        <textarea
+          type="textarea"
+          name="plot"
+          id="plot"
+          cols="30"
+          rows="10"
+          placeholder="Please enter plot here"
+          v-model="newMovieParams.plot"
+        ></textarea>
+      </div>
+      <div>Characters Remaining: {{ 1000 - newMovieParams.plot.length }}</div>
+      <br />
+      <div>
+        <label for="english">English?</label>
+        <div>
+          True:
+          <input
+            type="radio"
+            name="true"
+            id="english"
+            value="true"
+            v-model="newMovieParams.english"
+          />
+        </div>
+        <div>
+          False:
+          <input
+            type="radio"
+            name="false"
+            id="english"
+            value="false"
+            v-model="newMovieParams.english"
+          />
+        </div>
+        <input type="submit" name="Submit" id="submit" />
+      </div>
     </form>
+    <br />
     newMovieParams: {{ newMovieParams }}
   </div>
 </template>
@@ -116,7 +175,6 @@ export default {
         })
         .catch((error) => {
           this.errors = error.response.data.errors;
-          console.log(error.response.data.errors);
         });
     },
   },
