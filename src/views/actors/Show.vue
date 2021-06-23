@@ -7,6 +7,10 @@
     <p><strong>Known for:</strong> {{ this.actorDetails.known_for }}</p>
     <p><strong>Gender:</strong> {{ this.actorDetails.gender }}</p>
     <p><strong>Age: </strong> {{ this.actorDetails.age }}</p>
+    <img
+      :src="`${this.actorDetails.image_url}`"
+      :alt="`${this.actorDetails.first_name} ${this.actorDetails.last_name}`"
+    />
   </div>
 </template>
 

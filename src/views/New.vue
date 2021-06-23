@@ -68,6 +68,10 @@
     </form> -->
 
     <form method="POST" action="/new" v-on:submit.prevent="createMovie()">
+      <h3>New Movie:</h3>
+      <ul>
+        <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
+      </ul>
       <div>
         <label for="title">Title:</label>
         <input
@@ -174,7 +178,7 @@ export default {
           // this.$router.push("/");
         })
         .catch((error) => {
-          this.errors = error.response.data.errors;
+          this.errors << error.response.data.errors;
         });
     },
   },
